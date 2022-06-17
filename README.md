@@ -53,7 +53,7 @@ desc_a->MutableFieldValueByName(&a, "a_"); // a void* ptr to a_ in a
 
 // Scenario2: no instance existed
 auto* b = NEW_CLASS_PTR("ReflectA");
-auto* desc_b = CLASS_DESC("ReflectA"); // same as desc_a in scenario 1
+auto* desc_b = DESC("ReflectA"); // same as desc_a in scenario 1
 desc_b->MutableFieldValueById(b, 0); // a void* ptr to a_ in b
 ```
 
@@ -95,7 +95,7 @@ class DerivedClassB {
 // When use
 // Assume that we have a std::vector<BaseClass*> class_group
 for (auto* class : class_group) {
-  auto* class_desc = CLASS_DESC(class->GetClassName());
+  auto* class_desc = DESC(class->GetClassName());
 }
 ```
 

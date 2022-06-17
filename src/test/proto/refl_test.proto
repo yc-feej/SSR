@@ -1,0 +1,17 @@
+// Copyright 2019 Deeproute.ai. All Rights Reserved.
+// Author: Yuchen Liu (yuchenliu@deeproute.ai)
+
+syntax = "proto3";
+
+package reflection.test;
+
+message ReflTestProtoA {
+  int32 test_int = 1;
+  double test_double = 2;
+}
+
+message ReflTestProtoB {
+  int64 test_int = 1;
+  float test_float = 2;
+  string test_string = 3;
+}
