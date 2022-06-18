@@ -118,11 +118,11 @@ Status | Containers
 ---------|:------:
 :heavy_check_mark: | std::vector
 :heavy_check_mark: | std::map
-:x:  | std::unordered_map
-:x:  | std::set
-:x:  | std::unordered_set
+:heavy_check_mark: | std::unordered_map
+:heavy_check_mark: | std::set
+:heavy_check_mark: | std::unordered_set
 :x:  | std::list
 :x:  | std::deque
-:x:  | std::unique_ptr
-:x:  | std::shared_ptr
-:x:  | std::pair
+:heavy_check_mark: | std::unique_ptr
+:heavy_check_mark: | std::shared_ptr
+:heavy_check_mark: | std::pair
