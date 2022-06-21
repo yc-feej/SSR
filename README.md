@@ -97,6 +97,15 @@ class DerivedClassB {
 for (auto* class : class_group) {
   auto* class_desc = DESC(class->GetClassName());
 }
+
+// We are also providing RTTI-based methods and in-class methods
+for (auto* class : class_group) {
+  auto* class_desc = DESC_BY_BASE_PTR(class);
+}
+
+void ReflectA::Iterate() {
+  auto* curr_desc = DESC_BY_THIS(this);
+}
 ```
 
 ## Supported Pre-defined types
