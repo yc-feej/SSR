@@ -34,7 +34,7 @@ class ReflectionTestBase {
   char val6_;
   glm::vec3 val7_;
 
-  std::string class_name_{"prophet::ReflectionTestBase"};
+  std::string class_name_{"ReflectionTestBase"};
 };
 
 class ReflectionTestDerive : public ReflectionTestBase {
@@ -58,7 +58,7 @@ class ReflectionTestDerive : public ReflectionTestBase {
   std::unordered_map<int32_t, std::string> val7_{{3, "a"}, {4, "b"}};
   std::unordered_set<std::string> val8_{"xyz", "zxy"};
 
-  std::string class_name_{"prophet::ReflectionTestDerive"};
+  std::string class_name_{"ReflectionTestDerive"};
 };
 
 class ReflectionTestPtr {

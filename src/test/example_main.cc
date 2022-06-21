@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "basic/reflection/test/test.h"
+#include "src/test/test.h"
 
-REGISTER(prophet::ReflectionTestBase, ReflectionTestBase)
-REGISTER(prophet::ReflectionTestDerive, ReflectionTestDerive)
-REGISTER(prophet::ReflectionTestPtr, ReflectionTestPtr)
+REGISTER(ReflectionTestBase, ReflectionTestBase)
+REGISTER(ReflectionTestDerive, ReflectionTestDerive)
+REGISTER(ReflectionTestPtr, ReflectionTestPtr)
 
-void DumpItem(const void* val, prophet::reflection::Descriptor* field_desc) {
+void DumpItem(const void* val, reflection::Descriptor* field_desc) {
   // Dump base types.
   if (field_desc->GetTypeName() == "int32_t") {
     std::cout << "Field val: " << *field_desc->ToTypePtr<int32_t>(val)
@@ -32,17 +32,16 @@ void DumpItem(const void* val, prophet::reflection::Descriptor* field_desc) {
               << val_ref.z << std::endl;
   } else if (field_desc->IsProtobufMessage()) {
     auto* proto_field_desc =
-        prophet::reflection::MessageDescriptor::ToMessageDescriptor(field_desc);
+        reflection::MessageDescriptor::ToMessageDescriptor(field_desc);
     auto* msg_ptr = proto_field_desc->ToMessage(val);
     std::cout << "Field size: " << msg_ptr->GetDescriptor()->field_count()
               << std::endl;
   }
 }
 
-void DumpContainer(void* val, prophet::reflection::Descriptor* field_desc) {
+void DumpContainer(void* val, reflection::Descriptor* field_desc) {
   auto* container_desc =
-      prophet::reflection::ContainerDescriptor::ToContainerDescriptor(
-          field_desc);
+      reflection::ContainerDescriptor::ToContainerDescriptor(field_desc);
   std::string container_type = container_desc->GetContainerTypeName();
   int32_t container_size = container_desc->GetContainerSize(val);
   std::cout << "Container type: " << container_type << std::endl;
@@ -111,8 +110,7 @@ void DumpClass(void* object, T* desc) {
   if (object == nullptr) return;
 
   if (desc->IsTypePreDefined()) return;
-  auto* class_desc =
-      prophet::reflection::ClassDescriptor::ToClassDescriptor(desc);
+  auto* class_desc = reflection::ClassDescriptor::ToClassDescriptor(desc);
   std::cout << "class type:" << class_desc->GetTypeName() << std::endl;
   int32_t size = class_desc->GetFieldSize();
   std::cout << "class field size:" << size << std::endl;
@@ -128,8 +126,7 @@ void DumpClass(void* object, T* desc) {
     if (field_desc->IsSmartPtr()) {
       std::cout << "Is smart pointer! We parse content instead" << std::endl;
       auto* ptr_desc =
-          prophet::reflection::SmartPtrDescriptor::ToSmartPtrDescriptor(
-              field_desc);
+          reflection::SmartPtrDescriptor::ToSmartPtrDescriptor(field_desc);
       content_ptr = ptr_desc->GetMutableRawPtr(content_ptr);
       field_desc = ptr_desc->GetContentDescriptor();
       std::cout << "Content type: " << field_desc->GetTypeName() << std::endl;
@@ -152,26 +149,24 @@ void DumpClass(void* object, T* desc) {
 int main(int argc, char** argv) {
   // Base class test
   std::cout << "BASE CLASS EXAMPLE" << std::endl;
-  prophet::ReflectionTestBase test1(10, 1000000000, 5.0f, 8.0f, "test1", 'a');
-  auto* desc1 = prophet::reflection::DescriptorAccessor<
-      prophet::ReflectionTestBase>::Get();
+  ReflectionTestBase test1(10, 1000000000, 5.0f, 8.0f, "test1", 'a');
+  auto* desc1 = reflection::DescriptorAccessor<ReflectionTestBase>::Get();
   DumpClass(&test1, desc1);
 
   std::cout << "-------------" << std::endl;
 
   // Derived class test
   std::cout << "DERIVED CLASS EXAMPLE" << std::endl;
-  prophet::ReflectionTestDerive test2("test2");
-  auto* desc2 = prophet::reflection::DescriptorAccessor<
-      prophet::ReflectionTestDerive>::Get();
+  ReflectionTestDerive test2("test2");
+  auto* desc2 = reflection::DescriptorAccessor<ReflectionTestDerive>::Get();
   DumpClass(&test2, desc2);
 
   std::cout << "-------------" << std::endl;
 
   // Multiple class instance test
   std::cout << "MULTIPLE CLASS INSTANCE EXAMPLE" << std::endl;
-  prophet::ReflectionTestBase test3(20, 2000000000, 10.0f, 16.0f, "test3", 'b',
-                                    {2.0f, 4.0f, 6.0f});
+  ReflectionTestBase test3(20, 2000000000, 10.0f, 16.0f, "test3", 'b',
+                           {2.0f, 4.0f, 6.0f});
   DumpClass(&test3, desc1);
 
   std::cout << "-----------------" << std::endl;
@@ -184,20 +179,18 @@ int main(int argc, char** argv) {
 
   // Instancing from name test
   std::cout << "CLASS INSTANCING FROM NAME EXAMPLE" << std::endl;
-  void* test_base_obj = NEW_CLASS_PTR("prophet::ReflectionTestBase");
+  void* test_base_obj = NEW_CLASS_PTR("ReflectionTestBase");
   std::cout << "create success" << std::endl;
-  prophet::reflection::Descriptor* test_base_desc =
-      DESC("prophet::ReflectionTestBase");
+  reflection::Descriptor* test_base_desc = DESC("ReflectionTestBase");
   DumpClass(test_base_obj, test_base_desc);
 
   std::cout << "----------------" << std::endl;
 
   // Instancing a derived class
   std::cout << "CLASS GET DESCRIPTOR FROM NAME EXAMPLE" << std::endl;
-  prophet::ReflectionTestBase* test_derive_obj =
-      new prophet::ReflectionTestDerive("test4");
+  ReflectionTestBase* test_derive_obj = new ReflectionTestDerive("test4");
   std::cout << "create success" << std::endl;
-  prophet::reflection::Descriptor* test_derive_desc =
+  reflection::Descriptor* test_derive_desc =
       DESC(test_derive_obj->GetClassName());
   DumpClass(test_derive_obj, test_derive_desc);
 
@@ -208,17 +201,16 @@ int main(int argc, char** argv) {
   void* test_plain_obj = NEW_CLASS_PTR("int32_t");
   int32_t* test_plain_int = static_cast<int32_t*>(test_plain_obj);
   *test_plain_int = 5;
-  prophet::reflection::Descriptor* test_plain_desc = DESC("int32_t");
+  reflection::Descriptor* test_plain_desc = DESC("int32_t");
   DumpItem(test_plain_obj, test_plain_desc);
 
   std::cout << "----------------" << std::endl;
 
   // Smart pointer class example
   std::cout << "SMART PTR CLASS EXAMPLE" << std::endl;
-  prophet::ReflectionTestPtr test_ptr_obj;
-  prophet::reflection::Descriptor* test_ptr_desc =
-      prophet::reflection::DescriptorAccessor<
-          prophet::ReflectionTestPtr>::Get();
+  ReflectionTestPtr test_ptr_obj;
+  reflection::Descriptor* test_ptr_desc =
+      reflection::DescriptorAccessor<ReflectionTestPtr>::Get();
   std::cout << "original value: " << test_ptr_obj.get_val3()->at(0) << " "
             << test_ptr_obj.get_val3()->at(1) << std::endl;
   DumpClass(&test_ptr_obj, test_ptr_desc);
