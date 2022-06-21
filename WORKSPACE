@@ -20,10 +20,3 @@ load("@ssr//third_party/bazel:ssr.bzl", "ssr_deps")
 load_system_boost()
 
 ssr_deps()
-
-git_repository(
-    name = "com_google_protobuf",
-    commit = "983d115bd9f388468fd65d1e623b858eb12bc528",
-    remote = "https://github.com/protocolbuffers/protobuf.git",
-    shallow_since = "1597443653 -0700",
-)
