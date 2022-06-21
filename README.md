@@ -107,9 +107,14 @@ Status | Pre-defined Types
 :heavy_check_mark: | int64_t
 :heavy_check_mark: | float
 :heavy_check_mark: | double
+:heavy_check_mark: | bool
 :heavy_check_mark: | std::string
 :heavy_check_mark: | char
 :heavy_check_mark: | glm::vec3
+:heavy_check_mark: | glm::vec4
+:heavy_check_mark: | glm::mat3
+:heavy_check_mark: | glm::mat4
+:heavy_check_mark: | glm::quat
 :heavy_check_mark: | google::protobuf::Message
 
 ##  Supported containers and template types
@@ -125,4 +130,4 @@ Status | Containers
 :x:  | std::deque
 :heavy_check_mark: | std::unique_ptr
 :heavy_check_mark: | std::shared_ptr
-:heavy_check_mark: | std::pair
+:x: | std::pair
