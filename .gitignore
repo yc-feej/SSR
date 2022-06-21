@@ -32,10 +32,10 @@
 *.app
 
 # Bazel build files
-bazel-bin/
-bazel-out/
-bazel-SSR/
-bazel-testlogs/
+bazel-bin
+bazel-out
+bazel-SSR
+bazel-testlogs
 
 # Project temp files
 .vscode/
