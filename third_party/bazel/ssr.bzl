@@ -21,7 +21,7 @@ def ssr_deps():
         git_repository(
             name = "rules_proto",
             commit = "84ba6ec814eebbf5312b2cc029256097ae0042c3",
-            remote = "git@code.deeproute.ai:third-party-repos/rules_proto.git",
+            remote = "https://github.com/bazelbuild/rules_proto.git",
             shallow_since = "1605857269 +0100",
         )
 
@@ -30,7 +30,7 @@ def ssr_deps():
             name = "zlib",
             build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
             commit = "c303a52bf22635cdb50025bd3d224fe705c975fc",
-            remote = "git@code.deeproute.ai:third-party-repos/zlib.git",
+            remote = "https://github.com/madler/zlib.git",
             shallow_since = "1585194278 +0800",
         )
 
@@ -44,8 +44,8 @@ def ssr_deps():
     if "com_google_protobuf" not in native.existing_rules():
         git_repository(
             name = "com_google_protobuf",
-            # tag = "v3.13.0",
-            commit = "fde7cf7358ec7cd69e8db9be4f1fa6a5c431386a",
-            remote = "git@code.deeproute.ai:third-party-repos/protobuf.git",
+            tag = "v3.13.0",
+            # commit = "fde7cf7358ec7cd69e8db9be4f1fa6a5c431386a",
+            remote = "https://github.com/protocolbuffers/protobuf.git",
             shallow_since = "1597443653 -0700",
         )
